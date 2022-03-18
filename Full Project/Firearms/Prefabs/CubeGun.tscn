@@ -1,0 +1,95 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Firearms/Firearm.gd" type="Script" id=1]
+[ext_resource path="res://Roboto-Thin.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="CubeMesh" id=1]
+size = Vector3( 0.25, 0.25, 1 )
+
+[sub_resource type="SpatialMaterial" id=2]
+albedo_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="CylinderMesh" id=3]
+top_radius = 0.25
+bottom_radius = 0.25
+height = 0.001
+
+[sub_resource type="SpatialMaterial" id=4]
+emission_enabled = true
+emission = Color( 0.937255, 1, 0, 1 )
+emission_energy = 7.27
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="DynamicFont" id=7]
+size = 36
+use_mipmaps = true
+use_filter = true
+font_data = ExtResource( 2 )
+
+[sub_resource type="Theme" id=6]
+default_font = SubResource( 7 )
+
+[node name="CubeGun" type="Spatial"]
+script = ExtResource( 1 )
+w_ammo = 50
+w_fire_rate = 0.1
+w_damage = 5.0
+w_range = 100.0
+shoot_casts_path = NodePath("ShootCasts")
+muzzle_flash_path = NodePath("GunModel/MuzzleFlash")
+
+[node name="GunModel" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = SubResource( 2 )
+
+[node name="MuzzleFlash" type="MeshInstance" parent="GunModel"]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0.5 )
+visible = false
+mesh = SubResource( 3 )
+material/0 = SubResource( 4 )
+
+[node name="FireRate" type="Timer" parent="."]
+one_shot = true
+
+[node name="MuzzleTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="ShootCasts" type="Spatial" parent="."]
+
+[node name="ShootCast" type="RayCast" parent="ShootCasts"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.5 )
+enabled = true
+cast_to = Vector3( 0, 0, 100 )
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="HitMarker" type="ColorRect" parent="UI"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.0
+margin_top = -7.0
+margin_right = 7.0
+margin_bottom = 7.0
+
+[node name="HitMarkerTimer" type="Timer" parent="UI"]
+wait_time = 0.1
+
+[node name="AmmoLabel" type="Label" parent="UI"]
+anchor_right = 1.0
+margin_bottom = 14.0
+theme = SubResource( 6 )
+text = "Ammo: 9999999"
+align = 1
+valign = 1
+autowrap = true
+
+[connection signal="timeout" from="FireRate" to="." method="_on_FireRate_timeout"]
+[connection signal="timeout" from="MuzzleTimer" to="." method="_on_MuzzleTimer_timeout"]
+[connection signal="timeout" from="UI/HitMarkerTimer" to="." method="_on_HitMarkerTimer_timeout"]

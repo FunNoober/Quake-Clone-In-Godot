@@ -2,10 +2,11 @@ extends KinematicBody
 
 
 var speed = 5.0
-var jump_speed = 15
+var jump_speed = 10
 var max_speed = 20.0
 var dir = Vector3()
 var cam : Node
+var cam_hold : Node
 var vel = Vector3()
 
 var GRAVITY = -9
@@ -15,9 +16,17 @@ const DEACCEL = 20
 const MOUSE_SENSITIVITY = 1
 const MAX_SLOPE_ANGLE = 40
 
+var health
+
 func _ready():
 	cam = $CameraHolder/Camera
+	cam_hold = $CameraHolder
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	health = 100
+	
+func _process(delta):
+	if health <= 0:
+		get_tree().change_scene("res://PlayerMovement/TestScene.tscn")
 
 func _physics_process(delta):
 	process_input(delta)
@@ -35,14 +44,13 @@ func process_input(delta):
 		input_mv_vec.y -= 1
 	if Input.is_action_pressed("mv_right"):
 		input_mv_vec.x += 1
-		$CameraHolder.rotation_degrees.z = lerp($CameraHolder.rotation_degrees.z, 3.6, 2 * delta)
+		cam_hold.rotation_degrees.z = lerp(cam_hold.rotation_degrees.z, 3.6, 2 * delta)
 	if Input.is_action_pressed("mv_left"):
 		input_mv_vec.x -= 1
-		$CameraHolder.rotation_degrees.z = lerp($CameraHolder.rotation_degrees.z, -3.6, 2 * delta)
-		
+		cam_hold.rotation_degrees.z = lerp(cam_hold.rotation_degrees.z, -3.6, 2 * delta)
 		
 	if Input.is_action_pressed("mv_left") == false or Input.is_action_pressed("mv_right") == false:
-		$CameraHolder.rotation_degrees.z = lerp($CameraHolder.rotation_degrees.z, 0, 2 * delta)
+		cam_hold.rotation_degrees.z = lerp(cam_hold.rotation_degrees.z, 0, 2 * delta)
 		
 	input_mv_vec = input_mv_vec.normalized()
 	
@@ -77,9 +85,19 @@ func process_movement(delta):
 
 func _input(event):
 	if event is InputEventMouseMotion and Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED:
-		$CameraHolder.rotate_x(deg2rad(event.relative.y * MOUSE_SENSITIVITY))
+		cam_hold.rotate_x(deg2rad(event.relative.y * -MOUSE_SENSITIVITY))
 		self.rotate_y(deg2rad(event.relative.x * MOUSE_SENSITIVITY * -1))
 		
-		var cam_rot = $CameraHolder.rotation_degrees
-		cam_rot.x = clamp(cam_rot.x, -89, 89)
-		$CameraHolder.rotation_degrees = cam_rot
+		var cam_rot = cam_hold.rotation_degrees
+		cam_rot.x = clamp(cam_rot.x, -70, 70)
+		cam_rot.y = 180
+		cam_hold.rotation_degrees = cam_rot
+
+func take_damage(amount):
+	health -= amount
+	$UserInterface/DamageOverlay.show()
+	$UserInterface/DamageTimer.start()
+
+
+func _on_DamageTimer_timeout():
+	$UserInterface/DamageOverlay.hide()
