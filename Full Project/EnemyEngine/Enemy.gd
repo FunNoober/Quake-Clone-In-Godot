@@ -1,14 +1,11 @@
 extends KinematicBody
 
-var has_seen_enemy : bool
-var can_shoot : bool = true
-
 export var player_path : NodePath
 export var damage : float
 export var accuracy: float
-
+var has_seen_enemy : bool
+var can_shoot : bool = true
 var player
-
 var health : float
 var shoot_cast
 
@@ -18,9 +15,9 @@ func _ready():
 	shoot_cast = $Visuals/GunVisual/ShootCast
 
 func _process(delta):
-	if $VisionCast.is_colliding() == true:
-		if $VisionCast.get_collider().is_in_group("Player"):
-			has_seen_enemy = true
+	if $VisionCast.is_colliding() == true and $VisionCast.get_collider().name == "Player":
+		has_seen_enemy = true
+		
 	if has_seen_enemy == true:
 		$EnemyPos.translation = lerp($EnemyPos.translation, player.translation, delta*accuracy)
 		look_at(player.translation, Vector3.UP)
@@ -42,6 +39,7 @@ func shoot():
 			if shoot_cast.get_collider().is_in_group("Player"):
 				shoot_cast.get_collider().take_damage(damage)
 		$Visuals/GunVisual/ShootTimer.start()
+		$SoundEffect.play()
 		
 		$Visuals/GunVisual/MuzzleFlash.show()
 		$MuzzleTimer.start()

@@ -26,14 +26,14 @@ func _process(delta):
 		ready_to_shoot = false
 		muzzle_flash.show()
 		w_ammo -= 1
+		$SoundEffect.play()
 		$MuzzleTimer.start()
 		for i in range(shoot_casts.get_child_count()):
-			shoot_casts.get_child(i).cast_to.z = w_range
-			if shoot_casts.get_child(i).get_collider() != null:
-				if shoot_casts.get_child(i).get_collider().is_in_group("Enemy"):
-					shoot_casts.get_child(i).get_collider().take_damage(w_damage)
-					show_hit_marker()
-				
+			var shoot_cast = shoot_casts.get_child(i)
+			shoot_cast.cast_to.z = w_range
+			if shoot_cast.is_colliding() == true and shoot_cast.get_collider().is_in_group("Enemy"):
+				shoot_cast.get_collider().take_damage(w_damage)
+				show_hit_marker()
 		$FireRate.start()
 
 

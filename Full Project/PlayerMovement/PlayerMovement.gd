@@ -26,7 +26,7 @@ func _ready():
 	
 func _process(delta):
 	if health <= 0:
-		get_tree().change_scene("res://PlayerMovement/TestScene.tscn")
+		get_tree().reload_current_scene()
 
 func _physics_process(delta):
 	process_input(delta)

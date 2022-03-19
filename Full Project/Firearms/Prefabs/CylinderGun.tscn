@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Firearms/Firearm.gd" type="Script" id=1]
 [ext_resource path="res://Global.tres" type="Theme" id=2]
+[ext_resource path="res://SFX/gun_shot_heavy.ogg" type="AudioStream" id=3]
 
 [sub_resource type="CylinderMesh" id=5]
 top_radius = 0.1
@@ -17,9 +18,11 @@ bottom_radius = 0.25
 height = 0.001
 
 [sub_resource type="SpatialMaterial" id=4]
+albedo_color = Color( 0, 0, 0, 1 )
+metallic_specular = 0.0
 emission_enabled = true
 emission = Color( 0.937255, 1, 0, 1 )
-emission_energy = 7.27
+emission_energy = 4.87
 emission_operator = 0
 emission_on_uv2 = false
 
@@ -99,6 +102,9 @@ text = "Ammo: 9999999"
 align = 1
 valign = 1
 autowrap = true
+
+[node name="SoundEffect" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
 
 [connection signal="timeout" from="FireRate" to="." method="_on_FireRate_timeout"]
 [connection signal="timeout" from="MuzzleTimer" to="." method="_on_MuzzleTimer_timeout"]
