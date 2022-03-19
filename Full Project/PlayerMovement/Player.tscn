@@ -1,9 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://PlayerMovement/PlayerMovement.gd" type="Script" id=1]
 [ext_resource path="res://Firearms/Prefabs/CubeGun.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Firearms/Prefabs/CylinderGun.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Firearms/WeaponSwitch.gd" type="Script" id=4]
+[ext_resource path="res://Global.tres" type="Theme" id=5]
+[ext_resource path="res://MainMenu/PauseMenu.gd" type="Script" id=6]
 
 [sub_resource type="CapsuleShape" id=1]
 
@@ -41,4 +43,44 @@ color = Color( 1, 0, 0, 0.137255 )
 
 [node name="DamageTimer" type="Timer" parent="UserInterface"]
 
+[node name="PauseMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 6 )
+
+[node name="Background" type="ColorRect" parent="PauseMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.627451 )
+
+[node name="Buttons" type="VBoxContainer" parent="PauseMenu"]
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -453.0
+margin_right = -141.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="ResumeButton" type="Button" parent="PauseMenu/Buttons"]
+margin_right = 312.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 5 )
+text = "Resume"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenu/Buttons"]
+margin_top = 302.0
+margin_right = 312.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 5 )
+text = "Main Menu"
+
 [connection signal="timeout" from="UserInterface/DamageTimer" to="." method="_on_DamageTimer_timeout"]
+[connection signal="pressed" from="PauseMenu/Buttons/ResumeButton" to="PauseMenu" method="_on_ResumeButton_pressed"]
+[connection signal="pressed" from="PauseMenu/Buttons/MainMenuButton" to="PauseMenu" method="_on_MainMenuButton_pressed"]

@@ -1,0 +1,72 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Global.tres" type="Theme" id=1]
+[ext_resource path="res://MainMenu/MainMenu.gd" type="Script" id=2]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+level_paths = [ "res://PlayerMovement/TestScene.tscn", "res://PlayerMovement/TestScene.tscn", "res://PlayerMovement/TestScene.tscn" ]
+
+[node name="Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.199219, 0.199219, 0.199219, 1 )
+
+[node name="Rows" type="VBoxContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="LevelButtons" type="HBoxContainer" parent="Rows"]
+margin_right = 1024.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Level1Button" type="Button" parent="Rows/LevelButtons"]
+margin_right = 338.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+text = "Level 1"
+
+[node name="Level2Button" type="Button" parent="Rows/LevelButtons"]
+margin_left = 342.0
+margin_right = 681.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+text = "Level 2"
+
+[node name="Level3Button" type="Button" parent="Rows/LevelButtons"]
+margin_left = 685.0
+margin_right = 1024.0
+margin_bottom = 298.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+text = "Level 3"
+
+[node name="ExtraButtons" type="HBoxContainer" parent="Rows"]
+margin_top = 302.0
+margin_right = 1024.0
+margin_bottom = 600.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="QuitButton" type="Button" parent="Rows/ExtraButtons"]
+margin_right = 1024.0
+margin_bottom = 298.0
+hint_tooltip = "Exit the game"
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 1 )
+text = "Quit"
+
+[connection signal="pressed" from="Rows/LevelButtons/Level1Button" to="." method="_on_Level1Button_pressed"]
+[connection signal="pressed" from="Rows/LevelButtons/Level2Button" to="." method="_on_Level2Button_pressed"]
+[connection signal="pressed" from="Rows/LevelButtons/Level3Button" to="." method="_on_Level3Button_pressed"]
+[connection signal="pressed" from="Rows/ExtraButtons/QuitButton" to="." method="_on_QuitButton_pressed"]

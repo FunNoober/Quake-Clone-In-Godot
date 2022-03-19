@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Firearms/Firearm.gd" type="Script" id=1]
-[ext_resource path="res://Roboto-Thin.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Global.tres" type="Theme" id=2]
 
 [sub_resource type="CylinderMesh" id=5]
 top_radius = 0.1
@@ -22,15 +22,6 @@ emission = Color( 0.937255, 1, 0, 1 )
 emission_energy = 7.27
 emission_operator = 0
 emission_on_uv2 = false
-
-[sub_resource type="DynamicFont" id=6]
-size = 36
-use_mipmaps = true
-use_filter = true
-font_data = ExtResource( 2 )
-
-[sub_resource type="Theme" id=7]
-default_font = SubResource( 6 )
 
 [node name="CylinderGun" type="Spatial"]
 script = ExtResource( 1 )
@@ -103,7 +94,7 @@ one_shot = true
 [node name="AmmoLabel" type="Label" parent="UI"]
 anchor_right = 1.0
 margin_bottom = 14.0
-theme = SubResource( 7 )
+theme = ExtResource( 2 )
 text = "Ammo: 9999999"
 align = 1
 valign = 1
