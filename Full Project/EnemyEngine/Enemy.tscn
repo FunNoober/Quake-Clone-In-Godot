@@ -34,8 +34,8 @@ emission_on_uv2 = false
 
 [node name="Enemy" type="KinematicBody" groups=["Enemy"]]
 script = ExtResource( 1 )
-damage = 25.0
-accuracy = 10.0
+damage = 10.0
+accuracy = 5.0
 
 [node name="EnemyCollision" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0.2 )

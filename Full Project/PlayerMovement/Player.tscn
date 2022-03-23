@@ -43,6 +43,17 @@ color = Color( 1, 0, 0, 0.137255 )
 
 [node name="DamageTimer" type="Timer" parent="UserInterface"]
 
+[node name="Timer" type="Label" parent="UserInterface"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -19.0
+size_flags_horizontal = 3
+theme = ExtResource( 5 )
+text = "00:00:00"
+align = 1
+valign = 1
+
 [node name="PauseMenu" type="Control" parent="."]
 visible = false
 anchor_right = 1.0
@@ -55,27 +66,82 @@ anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.627451 )
 
 [node name="Buttons" type="VBoxContainer" parent="PauseMenu"]
-anchor_left = 0.5
-anchor_right = 0.5
 anchor_bottom = 1.0
-margin_left = -453.0
-margin_right = -141.0
+margin_right = 191.0
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="ResumeButton" type="Button" parent="PauseMenu/Buttons"]
-margin_right = 312.0
-margin_bottom = 298.0
+margin_right = 191.0
+margin_bottom = 178.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 5 )
 text = "Resume"
 
 [node name="MainMenuButton" type="Button" parent="PauseMenu/Buttons"]
-margin_top = 302.0
-margin_right = 312.0
-margin_bottom = 600.0
+margin_top = 182.0
+margin_right = 191.0
+margin_bottom = 360.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 5 )
+text = "Main Menu"
+
+[node name="FinishMenu" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Background" type="ColorRect" parent="FinishMenu"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.627451 )
+
+[node name="Buttons" type="VBoxContainer" parent="FinishMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -121.0
+margin_top = -51.5
+margin_right = 121.0
+margin_bottom = 51.5
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Lables" type="HBoxContainer" parent="FinishMenu/Buttons"]
+margin_right = 242.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+
+[node name="MissionFinishedLabel" type="Label" parent="FinishMenu/Buttons/Lables"]
+margin_right = 119.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+theme = ExtResource( 5 )
+text = "Mission Finished!"
+align = 1
+valign = 1
+
+[node name="TimeLabel" type="Label" parent="FinishMenu/Buttons/Lables"]
+margin_left = 123.0
+margin_right = 242.0
+margin_bottom = 19.0
+size_flags_horizontal = 3
+size_flags_vertical = 6
+theme = ExtResource( 5 )
+text = "00.00.00"
+align = 2
+valign = 1
+
+[node name="MainMenuButton" type="Button" parent="FinishMenu/Buttons"]
+margin_top = 23.0
+margin_right = 242.0
+margin_bottom = 103.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 5 )
@@ -84,3 +150,4 @@ text = "Main Menu"
 [connection signal="timeout" from="UserInterface/DamageTimer" to="." method="_on_DamageTimer_timeout"]
 [connection signal="pressed" from="PauseMenu/Buttons/ResumeButton" to="PauseMenu" method="_on_ResumeButton_pressed"]
 [connection signal="pressed" from="PauseMenu/Buttons/MainMenuButton" to="PauseMenu" method="_on_MainMenuButton_pressed"]
+[connection signal="pressed" from="FinishMenu/Buttons/MainMenuButton" to="." method="_on_MainMenuButton_pressed"]

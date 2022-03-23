@@ -17,14 +17,18 @@ const MOUSE_SENSITIVITY = 1
 const MAX_SLOPE_ANGLE = 40
 
 var health
+var time = 0.0
 
 func _ready():
+	get_tree().get_root().get_child(0).get_node("FinishLevelTrigger").connect("player_detected", self, "show_finish")
 	cam = $CameraHolder/Camera
 	cam_hold = $CameraHolder
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	health = 100
 	
 func _process(delta):
+	time += delta
+	$UserInterface/Timer.text = str(stepify(time, 0.01))
 	if health <= 0:
 		get_tree().reload_current_scene()
 
@@ -101,3 +105,15 @@ func take_damage(amount):
 
 func _on_DamageTimer_timeout():
 	$UserInterface/DamageOverlay.hide()
+	
+func show_finish():
+	$FinishMenu.show()
+	$FinishMenu/Buttons/Lables/TimeLabel.text = str(stepify(time, 0.01))
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Engine.time_scale = 0
+
+
+func _on_MainMenuButton_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Engine.time_scale = 1
+	get_tree().change_scene("res://MainMenu/MainMenu.tscn")
