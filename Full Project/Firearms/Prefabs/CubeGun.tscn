@@ -26,9 +26,9 @@ emission_on_uv2 = false
 
 [node name="CubeGun" type="Spatial"]
 script = ExtResource( 1 )
-w_ammo = 50
+w_ammo = 200
 w_fire_rate = 0.1
-w_damage = 5.0
+w_damage = 10.0
 w_range = 100.0
 shoot_casts_path = NodePath("ShootCasts")
 muzzle_flash_path = NodePath("GunModel/MuzzleFlash")
@@ -67,10 +67,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -7.0
-margin_top = -7.0
-margin_right = 7.0
-margin_bottom = 7.0
+margin_left = -2.5
+margin_top = -2.5
+margin_right = 2.5
+margin_bottom = 2.5
 
 [node name="HitMarkerTimer" type="Timer" parent="UI"]
 wait_time = 0.1

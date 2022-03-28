@@ -15,3 +15,7 @@ func _on_Level3Button_pressed():
 
 func _on_QuitButton_pressed():
 	get_tree().quit()
+
+
+func _on_AboutButton_pressed():
+	$AboutDialog.show()

@@ -20,7 +20,8 @@ var health
 var time = 0.0
 
 func _ready():
-	get_tree().get_root().get_child(0).get_node("FinishLevelTrigger").connect("player_detected", self, "show_finish")
+	if get_tree().get_root().get_child(0).get_node("FinishLevelTrigger") != null:
+		get_tree().get_root().get_child(0).get_node("FinishLevelTrigger").connect("player_detected", self, "show_finish")
 	cam = $CameraHolder/Camera
 	cam_hold = $CameraHolder
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)

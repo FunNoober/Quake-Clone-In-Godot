@@ -19,8 +19,10 @@ func _process(delta):
 		has_seen_enemy = true
 		
 	if has_seen_enemy == true:
-		$EnemyPos.translation = lerp($EnemyPos.translation, player.translation, delta*accuracy)
 		look_at(player.translation, Vector3.UP)
+		
+	if $VisionCast.is_colliding() == true and $VisionCast.get_collider().name == "Player":
+		$EnemyPos.translation = lerp($EnemyPos.translation, player.translation, delta*accuracy)
 		shoot_cast.look_at($EnemyPos.translation, Vector3.UP)
 		shoot()
 		
